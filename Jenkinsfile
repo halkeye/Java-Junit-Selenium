@@ -28,18 +28,19 @@ browsers = [
 ]
 
 parallelTasks = [:]
-for (int b = 0; b < browsers.toInteger(); b++) {
+for (int b = 0; b < browsers.size(); b++) {
     browser = browsers[b];
     parallelTasks["${browser.os} ${browser.browser} - ${browser.version}"] = {
-        node {
-            sauce('saucelabs') {
-                sh "mvn test -d -DbrowserName=${browser.browser} -DbrowserOs=${browser.os} -DbrowserVersion=${browser.version}"
-            }
+        def mvnHome = tool 'Maven'
+        sauce('saucelabs') {
+            sh "${mvnHome}/bin/mvn test -DbrowserName=${browser.browser} -DbrowserOs=${browser.os} -DbrowserVersion=${browser.version}"
         }
     }
 }
 
 node {
+    def mvnHome = tool 'Maven'
+
     // Mark the code checkout 'stage'....
     stage 'Checkout'
     // Get some code from a GitHub repository
@@ -47,7 +48,7 @@ node {
     git url: 'https://github.com/halkeye/Java-Junit-Selenium.git'
 
     stage 'Compile'
-    sh 'mvn compile'
+    sh "${mvnHome}/bin/mvn compile"
 
     stage 'Test'
     parallel parallelTasks
