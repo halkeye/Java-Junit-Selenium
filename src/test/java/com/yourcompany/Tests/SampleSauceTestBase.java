@@ -122,6 +122,17 @@ public class SampleSauceTestBase implements SauceOnDemandSessionIdProvider {
     @ConcurrentParameterized.Parameters
     public static LinkedList browsersStrings() {
         LinkedList browsers = new LinkedList();
+        if (System.getProperty("browserName") != null) {
+            browsers.add(new String[]{
+                    System.getProperty("browserOs"),
+                    System.getProperty("browserVersion"),
+                    System.getProperty("browserName"),
+                    null,
+                    null
+            });
+
+            return browsers;
+        }
 
         // windows 7, Chrome 41
         browsers.add(new String[]{"Windows 7", "41", "chrome", null, null});
