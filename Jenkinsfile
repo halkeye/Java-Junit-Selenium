@@ -50,7 +50,7 @@ node {
     sh 'mvn compile'
 
     stage 'Test'
-    parallel branches
+    parallel parallelTasks
 
     stage 'Collect Results'
     step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
