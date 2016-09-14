@@ -29,7 +29,7 @@ browsers = [
 
 parallelTasks = [:]
 for (int b = 0; b < browsers.toInteger(); b++) {
-    browser = browser[i];
+    browser = browser[b];
     branches["${browser.os} ${browser.browser} - ${browser.version}"] = {
         node {
             sauce('saucelabs') {
