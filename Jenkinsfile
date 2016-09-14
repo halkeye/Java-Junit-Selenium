@@ -30,7 +30,7 @@ browsers = [
 parallelTasks = [:]
 for (int b = 0; b < browsers.toInteger(); b++) {
     browser = browser[b];
-    branches["${browser.os} ${browser.browser} - ${browser.version}"] = {
+    parallelTasks["${browser.os} ${browser.browser} - ${browser.version}"] = {
         node {
             sauce('saucelabs') {
                 sh "mvn test -d -DbrowserName=${browser.browser} -DbrowserOs=${browser.os} -DbrowserVersion=${browser.version}"
